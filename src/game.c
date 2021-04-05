@@ -1,5 +1,6 @@
 #include "globals.h"
 #include "mylist.h"
+#include "word_data.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,7 +85,7 @@ int wordToScore(char *word)
 
 int main(int argc, char **argv)
 {
-    FILE *dictionary = fopen("../allnouns.txt", "r");
+//    FILE *dictionary = fopen("../allnouns.txt", "r"); //no need for this now because hardcoding all strings inside file
 //    FILE *dictionary = fopen(argv[1], "r"); //might be a security vulnerability letting '..'
 
     // char buf[NUM_WORDS][MAX_WORD_LENGTH];
@@ -103,12 +104,21 @@ int main(int argc, char **argv)
     struct List allwords;
     initList(&allwords);
     char dictionaryBuf[100];
-    while (fgets(dictionaryBuf, sizeof(dictionaryBuf), dictionary) != NULL){
+//    while (fgets(dictionaryBuf, sizeof(dictionaryBuf), dictionary) != NULL){
+//        sanitize(dictionaryBuf);
+//        char *word = (char *) malloc(sizeof(char) * strlen(dictionaryBuf) + 1);
+//        strcpy(word, dictionaryBuf);
+//        //note: addBack too damn expensive
+//        addFront(&allwords, (void *) word);
+//    }
+    int counter = 0;
+    while(all_words[counter] != NULL){
+        strcpy(dictionaryBuf, all_words[counter]);
         sanitize(dictionaryBuf);
         char *word = (char *) malloc(sizeof(char) * strlen(dictionaryBuf) + 1);
         strcpy(word, dictionaryBuf);
-        //note: addBack too damn expensive
         addFront(&allwords, (void *) word);
+        counter++;
     }
 
     //SCORE KEEPING
